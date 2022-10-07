@@ -1,0 +1,61 @@
+{% extends 'main.html' %} 
+{% load static %}
+
+
+{% block content %}
+
+<div class="container-fluid d-flex justify-content-end gap-3 mt-3">
+  <form action="{% url 'admin_home' %}" method="GET" class="d-flex w-25 ">
+    {% csrf_token %}
+    <input type="search" name="key" placeholder="Search here." />
+
+    <button type="submit" class="btn btn-primary ms-3">search</button>
+  </form>
+  <a href="{% url 'user_register'  %}" class="btn btn-outline-success px-4">ADD NEW USER</a></td>
+  {% comment %} <a href="{% url 'user_logout' %}"class="btn btn-secondary ">LOGOUT</a> {% endcomment %}
+</div>
+<div class='mt-2 d-flex-justify-content-end '>
+  {% comment %} <marquee>
+   <p>Now you are admin of this page .so you can edit delete and update user data without any kind of restriction,</p>
+    {% comment %} <img class="card-img-top w-2" src="{% static 'images\greencar (1).jpg' %}"  alt="Card image cap"> {% endcomment %}
+   
+  {% comment %} </marquee>  {% endcomment %}
+</div>
+<table class="table table text-start">
+  <thead class="border fw-bold">
+    <td>sl.No</td>
+    <td>Username</td>
+    <td>Email</td>
+    <td>Administrator</td>
+    <td>Joined date</td>
+    <td>Update User</td>
+    <td>Delete User</td>
+    <td>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      
+      <td>{{user.is_superuser}}</td>
+      <td>{{user.date_joined}}</td>
+      <td><a href="{% url 'user_update' user.id %}"class="btn btn-outline-warning">UPDATE</a></td>
+      <td>
+       <form action="{% url 'user_delete' user.id %}" method='POST'>
+          {% csrf_token %} 
+          <button  type="submit" class="btn btn-outline-danger">DELETE</button>
+         
+      </form></td> 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div>
+  {% for message in messages %}
+  <p class="text-uppercase font-weight-bold text-center text-danger">{{message}}</p>
+ 
+  {% endfor %}
+</div>
+{% endblock content %}

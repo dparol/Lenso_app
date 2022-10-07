@@ -1,0 +1,15 @@
+
+  {% extends 'main.html' %} 
+  
+  
+ 
+  {% block  superuser %}
+  {% if user.is_superuser %}
+  <a href="{% url 'admin_home'  %}"  class="btn btn-outline-primary">admin page</a> 
+  {% comment %} {% else %}
+  <a href="{% url 'admin_login_user'  %}"  class="btn btn-outline-primary">admin page</a> {% endcomment %}
+  {% endif %}
+  {% endblock %}  
+
+
+                                                                                                
